@@ -211,9 +211,14 @@ function BlockEnd({ position = [0, 0, 0] }) {
   const goalRef = useRef();
   useFrame(({ clock }) => {
     goalRef.current?.setNextKinematicTranslation({
-      x: 0,
-      y: 0.5 + Math.sin(clock.getElapsedTime()) * 0.1,
-      z: 0,
+      x: position[0],
+      y:
+        position[1] +
+        1 +
+        Math.sin(clock.getElapsedTime()) *
+          Math.cos(clock.getElapsedTime()) *
+          0.5,
+      z: position[2],
     });
   });
 
@@ -228,8 +233,8 @@ function BlockEnd({ position = [0, 0, 0] }) {
         receiveShadow
       />
       {/* Goal */}
-      <RigidBody ref={goalRef} type="kinematicPosition" position={[0, 0.5, 0]}>
-        <primitive object={goal.scene} scale={[0.5, 0.5, 0.5]} />
+      <RigidBody ref={goalRef} type="kinematicPosition" position={[0, 2.5, 0]}>
+        <primitive object={goal.scene} />
       </RigidBody>
     </group>
   );
